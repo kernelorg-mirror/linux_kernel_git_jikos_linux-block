@@ -162,10 +162,9 @@ struct nvme_cmd_cb {
 };
 
 static struct blk_mq_hw_ctx *nvme_alloc_hctx(struct blk_mq_tag_set *set,
-			  unsigned int i)
+			  unsigned int i, int node)
 {
-	return kzalloc_node(sizeof(struct blk_mq_hw_ctx), GFP_KERNEL,
-					cpu_to_node(i % num_online_cpus()));
+	return kzalloc_node(sizeof(struct blk_mq_hw_ctx), GFP_KERNEL, node);
 }
 
 static void nvme_free_hctx(struct blk_mq_hw_ctx *hctx, unsigned int i)
