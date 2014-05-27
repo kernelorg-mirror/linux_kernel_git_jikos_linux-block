@@ -1474,15 +1474,9 @@ static int nvme_shutdown_ctrl(struct nvme_dev *dev)
 	return 0;
 }
 
-static void nvme_req_complete(struct request *req)
-{
-	blk_mq_end_io(req, req->errors);
-}
-
 static struct blk_mq_ops nvme_mq_admin_ops = {
 	.queue_rq	= nvme_queue_request,
 	.map_queue	= blk_mq_map_queue,
-	.complete	= nvme_req_complete,
 	.alloc_hctx	= nvme_alloc_hctx,
 	.free_hctx	= nvme_free_hctx,
 	.init_hctx	= nvme_init_admin_hctx,
@@ -1493,7 +1487,6 @@ static struct blk_mq_ops nvme_mq_admin_ops = {
 static struct blk_mq_ops nvme_mq_ops = {
 	.queue_rq	= nvme_queue_request,
 	.map_queue	= blk_mq_map_queue,
-	.complete	= nvme_req_complete,
 	.alloc_hctx	= nvme_alloc_hctx,
 	.free_hctx	= nvme_free_hctx,
 	.init_hctx	= nvme_init_hctx,
